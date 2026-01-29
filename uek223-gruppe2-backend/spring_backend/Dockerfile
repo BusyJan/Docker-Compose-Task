@@ -1,11 +1,11 @@
 # -------- BUILD STAGE --------
-FROM amazoncorretto:17 AS build
+FROM gradle:8.5-jdk17 AS build
 
 WORKDIR /app
 COPY . .
 
-# Build with Gradle
-RUN chmod +x ./gradlew && ./gradlew --no-daemon bootJar
+# Build with Gradle (using container's gradle, no wrapper needed)
+RUN gradle --no-daemon bootJar
 
 # -------- RUNTIME STAGE --------
 FROM amazoncorretto:17
