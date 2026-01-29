@@ -1,6 +1,6 @@
 services:
   frontend:
-    container_name: frontend
+    container_name: janl_frontend
     build:
       context: ./uek223-gruppe2-frontend/react_frontend
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
       - backend
 
   backend:
-    container_name: backend
+    container_name: janl_backend
     build:
       context: ./uek223-gruppe2-backend/spring_backend
       dockerfile: Dockerfile
@@ -27,7 +27,7 @@ services:
 
   db:
     image: postgres:15-alpine
-    container_name: db
+    container_name: janl_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
