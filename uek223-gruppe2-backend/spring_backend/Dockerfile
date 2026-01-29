@@ -1,20 +1,18 @@
-# Set up the build environment using Eclipse Temurin JDK 18
-FROM eclipse-temurin:18-jdk AS build
-# Copy the project files to the /app directory
-COPY . /app
-# Set the working directory to /app
+# -------- BUILD STAGE --------
+FROM amazoncorretto:17 AS build
+
 WORKDIR /app
-# Make gradlew executable
-RUN chmod +x ./gradlew
-# Build the Spring Boot application using Gradle wrapper
-RUN ./gradlew --no-daemon bootJar
-# Create a new image with Eclipse Temurin JRE 18 (smaller runtime image)
-FROM eclipse-temurin:18-jre
-# Create a directory named /app
-RUN mkdir /app
-# Copy the built JAR file from the build stage to /app in the new image
-COPY --from=build /app/build/libs/*.jar /app/spring-boot-application.jar
-# Expose port 8080 for the Spring Boot application
+COPY . .
+
+# Build with Gradle
+RUN chmod +x ./gradlew && ./gradlew --no-daemon bootJar
+
+# -------- RUNTIME STAGE --------
+FROM amazoncorretto:17
+
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
+
 EXPOSE 8080
-# Run the Spring Boot application as a Java application with specified memory options
-CMD ["java", "-jar", "-Xmx4g", "/app/spring-boot-application.jar"]
+
+CMD ["java", "-jar", "-Xmx1g", "app.jar"]
