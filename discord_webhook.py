@@ -20,7 +20,7 @@ payload = {
     "embeds": [
         {
             "title": "🚨Incoming GitHub News🚨",
-            "description": "[✅ Jan submitted a new commit. ✅](https://jan.dev.noseryoung.ch) #StayFocused #StayUserFriendly #JohnDoe",
+            "description": "[✅Jan submitted a new commit✅](https://jan.dev.noseryoung.ch) #StayFocused #StayUserFriendly #JohnDoe",
             "color": 0x4a71f0,
             "image": {
                 "url": IMAGE_URL
